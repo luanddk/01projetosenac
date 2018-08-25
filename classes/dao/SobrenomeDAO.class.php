@@ -1,23 +1,14 @@
 <?php
 
-require_once __DIR__ ."/../modelo/Sobrenome.class.php";
+require_once(__DIR__ ."/./Conexao.class.php");
+require_once(__DIR__ ."/../modelo/Sobrenome.class.php");
 
 class SobrenomeDAO {
     
-    private function getConexao(){
-        $servidor = "localhost";
-        $usuario = "root";
-        $senha = "";
-        $banco = "db_cadastro_cliente";
-        $conexao = new PDO("mysql:host=$servidor; dbname=$banco",$usuario, $senha);
-        $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $conexao;
-    }
-
     public function findAll(){
         
         $sql = "SELECT * FROM tb_sobrenomes";
-        $statement = $this->getConexao()->prepare($sql);
+        $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetchAll();
         $sobrenomes = array();
@@ -34,7 +25,7 @@ class SobrenomeDAO {
     public function findById($id){
 
         $sql = "SELECT * FROM tb_sobrenomes WHERE sob_id = $id";
-        $statement = $this->getConexao()->prepare($sql);
+        $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetch();
         $sobrenome = new Sobrenome();
@@ -55,7 +46,7 @@ class SobrenomeDAO {
         $sql = "INSERT INTO tb_sobrenomes (sob_nome)
             VALUES ({$sobrenome->getSobrenome()})";
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->prepare($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -75,7 +66,7 @@ class SobrenomeDAO {
     public function remove($id){
     $sql = "DELETE FROM tb_sobrenomes WHERE sob_id = $id";
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->prepare($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }    

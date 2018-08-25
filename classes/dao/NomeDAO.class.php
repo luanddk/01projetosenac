@@ -1,23 +1,14 @@
 <?php
 
-require_once __DIR__ ."/../modelo/Nome.class.php";
+require_once(__DIR__ ."/./Conexao.class.php");
+require_once(__DIR__ ."/../modelo/Nome.class.php");
 
 class NomeDAO {
     
-    private function getConexao(){
-        $servidor = "localhost";
-        $usuario = "root";
-        $senha = "";
-        $banco = "db_cadastro_cliente";
-        $conexao = new PDO("mysql:host=$servidor; dbname=$banco",$usuario, $senha);
-        $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $conexao;
-    }
-
     public function findAll(){
         
         $sql = "SELECT * FROM tb_nomes";
-        $statement = $this->getConexao()->prepare($sql);
+        $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetchAll();
         $nomes = array();
@@ -34,7 +25,7 @@ class NomeDAO {
     public function findById($id){
 
         $sql = "SELECT * FROM tb_nomes WHERE nom_id = $id";
-        $statement = $this->getConexao()->prepare($sql);
+        $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetch();
         $nome = new Nome();
@@ -55,7 +46,7 @@ class NomeDAO {
         $sql = "INSERT INTO tb_nomes (nom_nome)
             VALUES ({$nome->getNome()})";
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->prepare($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -66,7 +57,7 @@ class NomeDAO {
     WHERE nom_id ={$nome->getId()}";
 
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->prepare($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -75,7 +66,7 @@ class NomeDAO {
     public function remove($id){
     $sql = "DELETE FROM tb_nomes WHERE nom_id = $id";
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->prepare($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }    

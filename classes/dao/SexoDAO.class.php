@@ -1,25 +1,17 @@
 <?php
 
-require_once __DIR__ ."/../modelo/Sexo.class.php";
+require_once(__DIR__ ."/./Conexao.class.php");
+require_once(__DIR__ ."/../modelo/Sexo.class.php");
 
 class SexoDAO {
-    
-    private function getConexao(){
-        $servidor = "10.2.2.68";
-        $usuario = "root";
-        $senha = "";
-        $banco = "db_loja_manha";
-        $conexao = new PDO("mysql:host=$servidor; dbname=$banco",$usuario, $senha);
-        $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $conexao;
-    }
+
 
     public function findAll(){
         
         $sql = "SELECT * FROM tb_sexos";
-        $statement = $this->getConexao()->prepare($sql);
+        $statement = Conexao::get()->prepare($sql);
         $statement->execute();
-        $row = $statement->fetchAll();
+        $result = $statement->fetchAll();
         $sexos = array();
         
         foreach ($result as $row){
@@ -35,7 +27,7 @@ class SexoDAO {
     public function findById($id){
 
         $sql = "SELECT * FROM tb_sexos WHERE sex_id = $id";
-        $statement = $this->getConexao()->prepare($sql);
+        $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetch();
         $sexo = new Sexo();
@@ -57,7 +49,7 @@ class SexoDAO {
         $sql = "INSERT INTO tb_sexos (sex_nome, sex_sigla)
             VALUES ('{$sexo->getNome()}','{$sexo->getSigla()}')";
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->exec($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -68,7 +60,7 @@ class SexoDAO {
     WHERE sex_id ={$sexo->getId()}";
 
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->exec($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -77,7 +69,7 @@ class SexoDAO {
     public function remove($id){
     $sql = "DELETE FROM tb_sexos WHERE sex_id = $id";
         try{    
-            $this->getConexao()->exec($sql);
+            Conexao::get()->exec($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }    
