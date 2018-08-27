@@ -7,7 +7,7 @@ class SobrenomeDAO {
     
     public function findAll(){
         
-        $sql = "SELECT * FROM tb_sobrenomes";
+        $sql = "SELECT * FROM tb_clientes";
         $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetchAll();
@@ -15,8 +15,8 @@ class SobrenomeDAO {
         
         foreach ($result as $row){
             $sobrenome = new Sobrenome();
-            $sobrenome->setId($row['sob_id']);
-            $sobrenome->setSobrenome($row['sob_nome']);
+            $sobrenome->setId($row['cli_id']);
+            $sobrenome->setSobrenome($row['cli_sobrenome']);
             array_push($sobrenomes, $sobrenome);
         }
         return $sobrenomes;
@@ -24,13 +24,13 @@ class SobrenomeDAO {
 
     public function findById($id){
 
-        $sql = "SELECT * FROM tb_sobrenomes WHERE sob_id = $id";
+        $sql = "SELECT * FROM tb_clientes WHERE cli_id = $id";
         $statement = Conexao::get()->prepare($sql);
         $statement->execute();
         $row = $statement->fetch();
         $sobrenome = new Sobrenome();
-        $sobrenome->setId($row['sob_id']);
-        $sobrenome->setSobrenome($row['sob_nome']);
+        $sobrenome->setId($row['cli_id']);
+        $sobrenome->setSobrenome($row['cli_sobrenome']);
         return $sobrenome;
     }
 
@@ -43,7 +43,7 @@ class SobrenomeDAO {
     }
     
     private function insert(Sobrenome $sobrenome){
-        $sql = "INSERT INTO tb_sobrenomes (sob_nome)
+        $sql = "INSERT INTO tb_clientes (cli_sobrenome)
             VALUES ({$sobrenome->getSobrenome()})";
         try{    
             Conexao::get()->prepare($sql);
@@ -53,8 +53,8 @@ class SobrenomeDAO {
     }
     
     private function update(Sobrenome $sobrenome){
-    $sql = "UPDATE tb_sobrenomes SET sob_nome = {$sobrenome->getSobrenome()}
-    WHERE sob_id ={$sobrenome->getId()}";
+    $sql = "UPDATE tb_clientes SET cli_sobrenome = {$sobrenome->getSobrenome()}
+    WHERE cli_id ={$sobrenome->getId()}";
 
         try{    
             $this->getConexao()->exec($sql);
@@ -64,7 +64,7 @@ class SobrenomeDAO {
     }
         
     public function remove($id){
-    $sql = "DELETE FROM tb_sobrenomes WHERE sob_id = $id";
+    $sql = "DELETE FROM tb_clientes WHERE cli_id = $id";
         try{    
             Conexao::get()->prepare($sql);
         } catch (PDOException $e) {
