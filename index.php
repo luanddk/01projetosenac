@@ -1,38 +1,34 @@
-<?php
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
+    <title>Bem-Vindo!</title>
     <link rel="stylesheet" href="./assets/css/bootstrap.css">
-    <link rel="stylesheet" href="./assets/css/all.css">
+    <link rel="icon" href="./assets/img/usuario.png">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">  <!--MENU-->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"><!-- nav bar -->
+<a class="navbar-brand" href="#">
+    <img src="./assets/img/home.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    Inicio
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="http://localhost:8080/projetosenac01">SENAC</a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item inactive">
-        <a class="nav-link" href="http://localhost:8080/projetosenac01/cadastro">Cadastro <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item inactive">
-        <a class="nav-link" href="http://localhost:8080/projetosenac01">Listagem</a>
-      </li>
-      <li class="nav-item inactive">
-        <a class="nav-link" href="http://localhost:8080/projetosenac01">Editar</a>
-      </li>
-    </ul>
-  </div>
-</nav> <!-- FIM MENU-->
-    <div class="container">
-        <p class="text-center text-uppercase font-italic">SEJA BEM VINDO AO SISTEMA SENAC</p>
-        <img src="img/senac.png" alt="senac" width=100% >
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="./cadastro/index.php">Cadastrar</a>
+      <a class="nav-item nav-link active" href="./listar/index.php">Listar</a>
     </div>
+  </div>
+</nav>
+<div class="container"><!--Inicio do Container-->
+<div class="row" style="margin-top: 100px;">
+<a href="http://www.senac.br/" target="_blank">
+<img src="./assets/img/senac.png" style="margin-left: 120px;">
+</a>
+</div>
+</div><!--Fim do Containder-->
 </body>
 </html>
