@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/./Sexo.class.php");
 require_once(__DIR__ . "/./UnidadeFederativa.class.php");
 require_once(__DIR__ . "/./Cidade.class.php");
-require_once(__DIR__ . "/./Bairros.class.php");
+require_once(__DIR__ . "/./Bairro.class.php");
 
 
 class Cliente {
@@ -58,7 +58,7 @@ class Cliente {
         return $this->sexo;
     }
 
-    public function setData(Sexo $sexo){
+    public function setSexo(Sexo $sexo){
         $this->sexo = $sexo;
     }
 

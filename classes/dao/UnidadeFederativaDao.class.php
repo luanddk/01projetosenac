@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/./Conexao.class.php");
 require_once(__DIR__. "/../modelo/UnidadeFederativa.class.php");
 
-class UnidadeFederativaDao {
+class UnidadeFederativaDAO {
         
     private $conexao;
     
@@ -34,7 +34,7 @@ class UnidadeFederativaDao {
         $statement->execute();
         $row = $statement->fetch();
         $uf = new UnidadeFederativa();
-        $uf->setId($row['uf_']);
+        $uf->setId($row['uf_id']);
         $uf->setNome($row['uf_nome']);
         $uf->setSigla($row['uf_sigla']);
         return $uf;

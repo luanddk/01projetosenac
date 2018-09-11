@@ -1,10 +1,20 @@
-<!DOCTYPE html>
 <?php 
+require_once(__DIR__ ."/../classes/modelo/Cliente.class.php");
+require_once(__DIR__ ."/../classes/modelo/Sexo.class.php");
+require_once(__DIR__ ."/../classes/modelo/Bairro.class.php");
+require_once(__DIR__ ."/../classes/modelo/Cidade.class.php");
+require_once(__DIR__ ."/../classes/modelo/UnidadeFederativa.class.php");
+require_once(__DIR__ ."/../classes/dao/ClienteDAO.class.php");
+require_once(__DIR__ ."/../classes/dao/SexoDAO.class.php");
+require_once(__DIR__ ."/../classes/dao/BairroDAO.class.php");
+require_once(__DIR__ ."/../classes/dao/CidadeDAO.class.php");
+require_once(__DIR__ ."/../classes/dao/UnidadeFederativaDAO.class.php");
 
-
-
+$cliente = new Cliente();
+$clientedao = new ClienteDAO();
 
 ?>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -31,22 +41,23 @@
 </nav>
 <div class="container"> <!--Início do container-->
 <div class="row" style="margin-top: 50px;">
-<form><!--Incio do Formulario-->
+<form method="post"><!--Incio do Formulario-->
+<input type="hidden" name="id" value="<?=$cliente->getId();?>">
     <div class="form-group">
       <label for="text">Nome:</label>
-      <input type="text" class="form-control" id="nome"  placeholder="Digite  seu nome" value="">
+      <input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite  seu nome" value="<?=$cliente->getNome();?>">
     </div>
       <div class="form-group">
-      <label for="exampleInputPassword1">Sobrenome:</label>
-      <input type="text" class="form-control" id="sobrenome" placeholder="Digite seu Sobrenome" value="">
+      <label for="text">Sobrenome:</label>
+      <input type="text" class="form-control" name="sobrenome" id="sobrenome" placeholder="Digite seu Sobrenome" value="<?=$cliente->getSobrenome();?>">
       </div>
       <div class="form-group">
-          <label for="dt_nasc">Data de Nascimento:</label>
-          <input type="date" id="dt_nasc" name="dt_nasc" class="form-control" value=""/>
+          <label for="nascimento">Data de Nascimento:</label>
+          <input type="date" id="nascimento" name="nascimento" class="form-control" value="<?=$cliente->getData();?>"/>
         </div>
       <div class="form-group">
         <label for="cpf">CPF:</label>
-        <input type="text" class="form-control" name="cpf" id="cpf" valeu="">
+        <input type="text" class="form-control" name="cpf" id="cpf" value="<?=$cliente->getCpf();?>">
       </div>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sexo1" value="">
@@ -60,7 +71,6 @@
     <div class="col">
       <label for="cep">CEP:</label>
       <input type="text" class="form-control" placeholder="">
-      
     </div>
     <div class="col">
       <label for="logradouro">Logradouro:</label>
@@ -73,35 +83,45 @@
     </div>
 </div>
   <div class="form-group col-md-6">
+  <div class="form-row">
     <label for="estado">Estado</label>
-      <select id="estado" class="form-control">
-        <option selected disable >Selecione</option>
+    <select class="form-control" name="uf" id="uf" onchange="show_cidades(this.value);">
+      <option value="0" selected>Selecione</option>
+        <?php foreach($ufs as $uf): ?>
+          <option value="<?=$uf->getId();?>">
+            <?=$uf->getNome();?>
+          </option>
+        <?php endforeach; ?>
       </select>
+      </div>
       <div class="form-row">
       <div class="form-group col-md-12">
       <label for="cidade">Cidade</label>
-      <select id="cidade" class="form-control">
-        <option selected disable >Selecione</option>
+      <select class="form-control" name="cidade" id="cidade" onchange="show_bairros(this.value);">
+        <option value="0" selected disabled>Selecione</option>
       </select>
-      <label for="inputState">Bairro:</label>
-      <select id="bairro" class="form-control">
-        <option selected disable>Selecione</option>
+      <label for="inputState">Bairro</label>
+      <select class="form-control" name="bairro" id="bairro">
+        <option value="0" selected disabled>Selecione</option>
       </select>
     </div>
     <div class="form-group col-md-12">
     
       <div class="form-row">
     <div class="form-group col-md-12">
-      <label for="inputEmail4">Email:</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Email">
     </div>
     <div class="form-group">
-    <button type="button" class="btn btn-primary"><i class="fas fa-user-plus"></i> Cadastrar </button><!--Butões-->
-    <button type="button" class="btn btn-danger"> <i class="fas fa-trash"></i> Limpar </button>
+    <button type="submit" class="btn btn-primary" name="salvar" value="salvar">
+    <i class="fas fa-user-plus"></i> Cadastrar 
+    </button><!--Butões-->
+    <button type="submit" class="btn btn-danger" name="limpar" value="limpar"> 
+    <i class="fas fa-trash"></i> Limpar 
+    </button>
 </div>
 </form><!--Fim do Formulario-->
-</div> <!--Fim do container -->
-</form>   
+</div> <!--Fim do container --> 
 </body>
-</script>
+<script src="assets/js/ajax_enderecos.js"></script>
 </html>
