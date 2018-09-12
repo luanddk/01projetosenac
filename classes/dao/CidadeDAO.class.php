@@ -20,12 +20,12 @@ class CidadeDAO {
         $cidades = array();
         foreach ($rows as $row) {
             $uf = new UnidadeFederativa();
-            $uf->setId($row['uf_id']);
-            $uf->setNome($row['uf_nome']);
-            $uf->setSigla($row['uf_sigla']);
+            $uf->setId($row['UF_ID']);
+            $uf->setNome($row['UF_NOME']);
+            $uf->setSigla($row['UF_SIGLA']);
             $cidade = new Cidade();
-            $cidade->setId($row['cid_id']);
-            $cidade->setNome($row['cid_nome']);
+            $cidade->setId($row['CID_ID']);
+            $cidade->setNome($row['CID_NOME']);
             $cidade->setUnidadeFederativa($uf);
             array_push($cidades, $cidade);
         }
@@ -39,12 +39,12 @@ class CidadeDAO {
         $statement->execute();
         $row = $statement->fetch();
         $uf = new UnidadeFederativa();
-        $uf->setId($row['uf_id']);
-        $uf->setNome($row['uf_nome']);
-        $uf->setSigla($row['uf_sigla']);
+        $uf->setId($row['UF_ID']);
+        $uf->setNome($row['UF_NOME']);
+        $uf->setSigla($row['UF_SIGLA']);
         $cidade = new Cidade();
-        $cidade->setId($row['cid_id']);
-        $cidade->setNome($row['cid_nome']);
+        $cidade->setId($row['CID_ID']);
+        $cidade->setNome($row['CID_NOME']);
         $cidade->setUnidadeFederativa($uf);
         return $cidade;
     }
@@ -59,12 +59,12 @@ class CidadeDAO {
         $cidades = array();
         foreach ($rows as $row) {
             $uf = new UnidadeFederativa();
-            $uf->setId($row['uf_id']);
-            $uf->setNome($row['uf_nome']);
-            $uf->setSigla($row['uf_sigla']);
+            $uf->setId($row['UF_ID']);
+            $uf->setNome($row['UF_NOME']);
+            $uf->setSigla($row['UF_SIGLA']);
             $cidade = new Cidade();
-            $cidade->setId($row['cid_id']);
-            $cidade->setNome($row['cid_nome']);
+            $cidade->setId($row['CID_ID']);
+            $cidade->setNome($row['CID_NOME']);
             $cidade->setUnidadeFederativa($uf);
             array_push($cidades, $cidade);
         }

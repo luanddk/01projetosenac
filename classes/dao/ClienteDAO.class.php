@@ -17,27 +17,37 @@ class ClienteDAO {
                             cli_uf_id, cli_cid_id, cli_bai_id, 
                             cli_cep, cli_logradouro, cli_observacoes, 
                             cli_email) 
-        VALUES (:nome, :sobrenome, :nascimento, :sexo, :cpf, 
-                :estado, :cidade, :bairro, 
-                :cep, :logradouro, :observacoes, :email)";
+        VALUES (:nome, :sobrenome, :nascimento, :cpf, :sexo, 
+                :estado, :cidade, :bairro,  
+                :cep, :logradouro, :observacoes, 
+                :email)";
         try {
+            $statement = $this->conexao->prepare($sql);
             $nome = $cliente->getNome();
             $sobrenome = $cliente->getSobrenome();
             $nascimento = $cliente->getData();
-            $sexo = $cliente->getSexo()->getId();
             $cpf = $cliente->getCpf();
+            $sexo = $cliente->getSexo()->getId();
+            $cep = $cliente->getCep();
+            $logradouro = $cliente->getLogradouro();
+            $observacoes = $cliente->getObservacao();
             $estado = $cliente->getUnidadeFederativa()->getId();
             $cidade = $cliente->getCidade()->getId();
             $bairro = $cliente->getBairro()->getId();
+            $email = $cliente->getEmail();
             $statement = $this->conexao->prepare($sql);
             $statement->bindParam(':nome', $nome);
             $statement->bindParam(':sobrenome', $sobrenome);
             $statement->bindParam(':nascimento', $nascimento);
-            $statement->bindParam(':sexo', $sexo);
             $statement->bindParam(':cpf', $cpf);
+            $statement->bindParam(':sexo', $sexo);
+            $statement->bindParam(':cep', $cep);
+            $statement->bindParam(':logradouro', $logradouro);
+            $statement->bindParam(':observacoes', $observacoes);
             $statement->bindParam(':estado', $estado);
             $statement->bindParam(':cidade', $cidade);
             $statement->bindParam(':bairro', $bairro);
+            $statement->bindParam(':email', $email);
             $statement->execute();
             return $this->findById($this->conexao->lastInsertId());
         } catch(PDOException $e) {
@@ -63,7 +73,7 @@ class ClienteDAO {
     }
     
     public function save(Cliente $cliente) {
-        if (is_null($marca->getId())) {
+        if (is_null($cliente->getId())) {
             return $this->insert($cliente);
         } else {
             return $this->update($cliente);
@@ -89,8 +99,8 @@ class ClienteDAO {
         $clientes = array();
         foreach ($rows as $row) {
             $cliente = new Cliente();
-            $cliente->setId($row['cli_id']);
-            $cliente->setNome($row['cli_nome']);
+            $cliente->setId($row['CLI_ID']);
+            $cliente->setNome($row['CLI_NOME']);
             array_push($clientes, $cliente);
         }
         return $clientes;
@@ -103,8 +113,8 @@ class ClienteDAO {
         $statement->execute();
         $row = $statement->fetch();
         $cliente = new Cliente();
-        $cliente->setId($row['cli_id']);
-        $cliente->setNome($row['cli_nome']);
+        $cliente->setId($row['CLI_ID']);
+        $cliente->setNome($row['CLI_NOME']);
         return $cliente;
     }
 }

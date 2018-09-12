@@ -11,7 +11,10 @@ require_once(__DIR__ ."/../classes/dao/CidadeDAO.class.php");
 require_once(__DIR__ ."/../classes/dao/UnidadeFederativaDAO.class.php");
 
 $cliente = new Cliente();
-$clientedao = new ClienteDAO();
+$clienteDAO = new ClienteDAO();
+
+$ufdao = new UnidadeFederativaDAO();
+$ufs = $ufdao->findAll();
 
 ?>
 <!DOCTYPE html>
@@ -59,6 +62,7 @@ $clientedao = new ClienteDAO();
         <label for="cpf">CPF:</label>
         <input type="text" class="form-control" name="cpf" id="cpf" value="<?=$cliente->getCpf();?>">
       </div>
+      <div class="form-group">
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sexo1" value="">
          <label class="form-check-label" for="inlineRadio1">Masculino</label>
@@ -67,10 +71,12 @@ $clientedao = new ClienteDAO();
          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sexo2" value="">
         <label class="form-check-label" for="inlineRadio2">Feminino</label>
       </div>
+      </div>
       <div class="row">
     <div class="col">
       <label for="cep">CEP:</label>
       <input type="text" class="form-control" placeholder="">
+      
     </div>
     <div class="col">
       <label for="logradouro">Logradouro:</label>
@@ -82,35 +88,33 @@ $clientedao = new ClienteDAO();
             <br />
     </div>
 </div>
-  <div class="form-group col-md-6">
-  <div class="form-row">
+  <div class="form-group col-md-6" id="div_uf">
     <label for="estado">Estado</label>
     <select class="form-control" name="uf" id="uf" onchange="show_cidades(this.value);">
-      <option value="0" selected>Selecione</option>
+      <option value="0" selected disabled>Selecione</option>
         <?php foreach($ufs as $uf): ?>
           <option value="<?=$uf->getId();?>">
             <?=$uf->getNome();?>
           </option>
         <?php endforeach; ?>
       </select>
-      </div>
-      <div class="form-row">
-      <div class="form-group col-md-12">
+      <div id="div_cidade">
       <label for="cidade">Cidade</label>
       <select class="form-control" name="cidade" id="cidade" onchange="show_bairros(this.value);">
-        <option value="0" selected disabled>Selecione</option>
+          <option value="0" selected disabled>Selecione</option>
       </select>
-      <label for="inputState">Bairro</label>
+      </div>
+    <div id="div_bairro">
+      <label for="bairro">Bairro</label>
       <select class="form-control" name="bairro" id="bairro">
         <option value="0" selected disabled>Selecione</option>
-      </select>
+      </select> 
     </div>
-    <div class="form-group col-md-12">
-    
-      <div class="form-row">
+    <div class="form-row">
     <div class="form-group col-md-12">
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Email">
+    </div>
     </div>
     <div class="form-group">
     <button type="submit" class="btn btn-primary" name="salvar" value="salvar">
@@ -123,5 +127,5 @@ $clientedao = new ClienteDAO();
 </form><!--Fim do Formulario-->
 </div> <!--Fim do container --> 
 </body>
-<script src="assets/js/ajax_enderecos.js"></script>
+<script src="../assets/js/ajax_enderecos.js"></script>
 </html>

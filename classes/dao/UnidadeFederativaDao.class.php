@@ -19,9 +19,9 @@ class UnidadeFederativaDAO {
         $ufs = array();
         foreach ($rows as $row) {
             $uf = new UnidadeFederativa();
-            $uf->setId($row['uf_id']);
-            $uf->setNome($row['uf_nome']);
-            $uf->setSigla($row['uf_sigla']);
+            $uf->setId($row['UF_ID']);
+            $uf->setNome($row['UF_NOME']);
+            $uf->setSigla($row['UF_SIGLA']);
             array_push($ufs, $uf);
         }
         return $ufs;
@@ -34,9 +34,9 @@ class UnidadeFederativaDAO {
         $statement->execute();
         $row = $statement->fetch();
         $uf = new UnidadeFederativa();
-        $uf->setId($row['uf_id']);
-        $uf->setNome($row['uf_nome']);
-        $uf->setSigla($row['uf_sigla']);
+        $uf->setId($row['UF_ID']);
+        $uf->setNome($row['UF_NOME']);
+        $uf->setSigla($row['UF_SIGLA']);
         return $uf;
     }
 }

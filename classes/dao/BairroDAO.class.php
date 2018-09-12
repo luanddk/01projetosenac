@@ -21,16 +21,16 @@ class BairroDAO {
         $bairros = array();
         foreach ($rows as $row) {
             $uf = new UnidadeFederativa();
-            $uf->setId($row['uf_id']);
-            $uf->setNome($row['uf_nome']);
-            $uf->setSigla($row['uf_sigla']);
+            $uf->setId($row['UF_ID']);
+            $uf->setNome($row['UF_NOME']);
+            $uf->setSigla($row['UF_SIGLA']);
             $cidade = new Cidade();
-            $cidade->setId($row['cid_id']);
-            $cidade->setNome($row['cid_nome']);
+            $cidade->setId($row['CID_ID']);
+            $cidade->setNome($row['CID_NOME']);
             $cidade->setUnidadeFederativa($uf);
             $bairro = new Bairro();
-            $bairro->setId($row['bai_id']);
-            $bairro->setNome($row['bai_nome']);
+            $bairro->setId($row['BAI_ID']);
+            $bairro->setNome($row['BAI_NOME']);
             $bairro->setCidade($cidade);
             array_push($bairros, $bairro);
         }
@@ -44,12 +44,12 @@ class BairroDAO {
         $statement->execute();
         $row = $statement->fetch();
         $uf = new UnidadeFederativa();
-        $uf->setId($row['uf_id']);
-        $uf->setNome($row['uf_nome']);
-        $uf->setSigla($row['uf_sigla']);
+        $uf->setId($row['UF_ID']);
+        $uf->setNome($row['UF_NOME']);
+        $uf->setSigla($row['UF_SIGLA']);
         $cidade = new Cidade();
-        $cidade->setId($row['cid_id']);
-        $cidade->setNome($row['cid_nome']);
+        $cidade->setId($row['CID_ID']);
+        $cidade->setNome($row['CID_NOME']);
         $cidade->setUnidadeFederativa($uf);
         return $cidade;
     }
@@ -64,16 +64,16 @@ class BairroDAO {
         $bairros = array();
         foreach ($rows as $row) {
             $uf = new UnidadeFederativa();
-            $uf->setId($row['uf_id']);
-            $uf->setNome($row['uf_nome']);
-            $uf->setSigla($row['uf_sigla']);
+            $uf->setId($row['UF_ID']);
+            $uf->setNome($row['UF_NOME']);
+            $uf->setSigla($row['UF_SIGLA']);
             $cidade = new Cidade();
-            $cidade->setId($row['cid_id']);
-            $cidade->setNome($row['cid_nome']);
+            $cidade->setId($row['CID_ID']);
+            $cidade->setNome($row['CID_NOME']);
             $cidade->setUnidadeFederativa($uf);
             $bairro = new Bairro();
-            $bairro->setId($row['bai_id']);
-            $bairro->setNome($row['bai_nome']);
+            $bairro->setId($row['BAI_ID']);
+            $bairro->setNome($row['BAI_NOME']);
             $bairro->setCidade($cidade);
             array_push($bairros, $bairro);
         }

@@ -14,7 +14,6 @@ class Conexao {
                 self::$conexao = new PDO(self::URL, self::USER, self::PASS, self::UTF);
                 self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
-
             return self::$conexao;
         
         } catch(PDOException $error) {

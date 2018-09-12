@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__ . "/./classes/modelo/Cidade.class.php");
-require_once(__DIR__ . "/./classes/modelo/Bairro.class.php");
-require_once(__DIR__ . "/./classes/dao/BairroDAO.class.php");
+require_once(__DIR__ . "/../classes/modelo/Cidade.class.php");
+require_once(__DIR__ . "/../classes/modelo/Bairro.class.php");
+require_once(__DIR__ . "/../classes/dao/BairroDAO.class.php");
 
 $cidade_id = $_GET['cidade'];
 $cidade = new Cidade();
@@ -20,7 +20,7 @@ $bairros = $dao->findByCidade($cidade);
     <body>
         <label for="bairro">Bairro</label>
         <select class="form-control" name="bairro" id="bairro">
-            <option value="0">--SELECIONE--</option>
+            <option value="0" selected disabled>Selecione</option>
             <?php foreach($bairros as $bairro): ?>
                 <option value="<?=$bairro->getId();?>">
                     <?=$bairro->getNome();?>
