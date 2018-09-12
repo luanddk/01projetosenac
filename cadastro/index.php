@@ -83,7 +83,7 @@ $ufs = $ufdao->findAll();
       <input type="text" class="form-control" placeholder="">
     </div>
     <div class="form-group">
-    				<label for="observacao">Obeservações:</label>
+    				<label for="observacao">Adicional:</label>
     				<textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
             <br />
     </div>
