@@ -84,18 +84,29 @@ class ClienteDAO {
     }
 
     public function findAll() {
-        $sql = "SELECT * FROM tb_clientes JOIN tb_sexos ON SEX_ID=CLI_SEX_ID 
-        JOIN tb_bairros ON BAI_ID=CLI_BAI_ID";
+        $sql = "SELECT * FROM tb_clientes 
+        JOIN tb_sexos ON SEX_ID=CLI_SEX_ID 
+        JOIN tb_bairros ON BAI_ID=CLI_BAI_ID
+        LEFT JOIN tb_cidades ON CID_ID=BAI_CID_ID 
+        LEFT JOIN tb_ufs ON UF_ID=CID_UF_ID";
         $statement = $this->conexao->prepare($sql);
         $statement->execute();
         $rows = $statement->fetchAll();
         $clientes = array();
         foreach ($rows as $row) {
 
+            $uf = new UnidadeFederativa();
+            $uf->setId($row['UF_ID']);
+            $uf->setNome($row['UF_NOME']);
+            $uf->setSigla($row['UF_SIGLA']);
+            
+            $cidade = new Cidade();
+            $cidade->setId($row['CID_ID']);
+            $cidade->setNome($row['CID_NOME']);
+            
             $bairro = new Bairro();
             $bairro->setId($row['BAI_ID']);
             $bairro->setNome($row['BAI_NOME']);
-
             
             $sexo = new Sexo();
             $sexo->setId($row['SEX_ID']);
@@ -108,6 +119,9 @@ class ClienteDAO {
             $cliente->setData($row['CLI_DATA']);
             $cliente->setSexo($sexo);
             $cliente->setBairro($bairro);
+            $cliente->setCidade($cidade);
+            $cliente->setUnidadeFederativa($uf);
+
             array_push($clientes, $cliente);
         }
         return $clientes;

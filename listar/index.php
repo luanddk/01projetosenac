@@ -3,6 +3,7 @@ require_once(__DIR__ . "/../classes/modelo/Cliente.class.php");
 require_once(__DIR__ ."/../classes/dao/ClienteDAO.class.php");
 $cliente = new Cliente();
 $clienteDAO = new ClienteDAO();
+
 if (isset($_POST['editar']) && $_POST['editar'] == 'editar') {
   $cliente = $clienteDAO->findById($_POST['ID']);
 }
@@ -10,6 +11,7 @@ if (isset($_POST['remover']) && $_POST['remover'] == 'remover') {
   $clienteDAO->remove($_POST['ID']);
   header('location: index.php');
 }
+
 $clientes = $clienteDAO->findAll();
 ?>
 <!DOCTYPE html>
@@ -65,6 +67,8 @@ $clientes = $clienteDAO->findAll();
        <td><?=$cliente->getData();?></td>
        <td><?=$cliente->getSexo()->getSigla();?></td>
        <td><?=$cliente->getBairro()->getNome();?></td>
+       <td><?=$cliente->getCidade()->getNome();?></td>
+       <td><?=$cliente->getUnidadeFederativa()->getSigla();?></td>
       <td>
           <form method="post" id="form-editar">
             <input type="hidden" name="id" value="<?=$cliente->getId();?>">
