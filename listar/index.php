@@ -1,3 +1,17 @@
+<?php
+require_once(__DIR__ . "/../classes/modelo/Cliente.class.php");
+require_once(__DIR__ ."/../classes/dao/ClienteDAO.class.php");
+$cliente = new Cliente();
+$clienteDAO = new ClienteDAO();
+if (isset($_POST['editar']) && $_POST['editar'] == 'editar') {
+  $cliente = $clienteDAO->findById($_POST['ID']);
+}
+if (isset($_POST['remover']) && $_POST['remover'] == 'remover') {
+  $clienteDAO->remove($_POST['ID']);
+  header('location: index.php');
+}
+$clientes = $clienteDAO->findAll();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +20,7 @@
     <title>Listar</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="icon" href="../assets/img/lista.png">
+    <link rel="stylesheet" href="../assets/css/all.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><!-- nav bar -->
@@ -27,21 +42,45 @@
 <div class="row" style="margin-top: 50px;">
 <fieldset>
   <legend>Lista de Clientes</legend>
-    <table class="table">
-    <thead class="thead-light">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Sobrenome</th>
+      <th scope="col">Data de Nascimento</th>
+      <th scope="col">Sexo</th>
+      <th scope="col">Bairro</th> 
+      <th scope="col">Cidade</th> 
+      <th scope="col">UF</th> 
+      <th colspan="2">AÇÕES</th>                          
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($clientes as $cliente): ?>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Sobrenome</th>
-        <th scope="col">Data de Nascimento</th>
-        <th scope="col">Sexo</th>
-        <th scope="col">/</th>
-        <th scope="col">Bairro</th>
-        <th scope="col">Cidade</th>
-        <th scope="col">Estado</th>
-      </tr>
-    </thead>
-  </table>
+       <td><?=$cliente->getId();?></td>
+       <td><?=$cliente->getNome();?></td>
+       <td><?=$cliente->getSobrenome();?></td>
+       <td><?=$cliente->getData();?></td>
+       <td><?=$cliente->getSexo()->getSigla();?></td>
+       <td><?=$cliente->getBairro()->getNome();?></td>
+      <td>
+          <form method="post" id="form-editar">
+            <input type="hidden" name="id" value="<?=$cliente->getId();?>">
+            <button type="submit" class="btn btn-sm btn-success" name="editar" value="editar"><i class="fas fa-edit"></i></button>
+          </form>
+      </td>
+      <td>
+        <form method="post" id="form-remover">
+          <input type="hidden" name="id" value="<?=$cliente->getId();?>">
+          <button type="submit" class="btn btn-sm btn-danger" name="remover" value="remover"><i class="fas fa-trash-alt"></i></button>
+        </form>
+      </td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
 </fieldset>
 </div>
 </div>

@@ -25,7 +25,7 @@ class Cidade{
     }
    
     public function setNome($nome){
-        $this->nome = strtoupper($nome);
+        $this->nome = $nome;
     }
     
     public function setUnidadeFederativa(UnidadeFederativa $uf){
