@@ -11,25 +11,18 @@ class ClienteDAO {
         $this->conexao = Conexao::get();
     }
     private function insert(Cliente $cliente) {
-        $sql = "INSERT INTO tb_clientes (CLI_NOME, CLI_SOBRENOME, CLI_DATA, CLI_CPF, CLI_SEX_ID, 
-                           CLI_CEP, CLI_LOGRADOURO, CLI_OBSERVACOES, CLI_BAI_ID, 
+
+        try {
+
+
+            $statement = $this->conexao->prepare("INSERT INTO tb_clientes (CLI_NOME, CLI_SOBRENOME, CLI_DATA, CLI_CPF, CLI_SEX_ID, 
+        CLI_CEP, CLI_LOGRADOURO, CLI_OBSERVACOES, CLI_BAI_ID, 
                             CLI_EMAIL) 
         VALUES (:nome, :sobrenome, :nascimento, :cpf, :sexo, 
-                :bairro, :cep, :logradouro, :observacoes, 
-                :email)";
-        try {
-            $statement = $this->conexao->prepare($sql);
-            $nome = $cliente->getNome();
-            $sobrenome = $cliente->getSobrenome();
-            $nascimento = $cliente->getData();
-            $cpf = $cliente->getCpf();
-            $sexo = $cliente->getSexo()->getId();
-            $cep = $cliente->getCep();
-            $logradouro = $cliente->getLogradouro();
-            $observacoes = $cliente->getObservacao();
-            $bairro = $cliente->getBairro()->getId();
-            $email = $cliente->getEmail();
-            $statement = $this->conexao->prepare($sql);
+                 :cep, :logradouro, :observacoes, :bairro, 
+                :email)");
+
+
             $statement->bindParam(':nome', $nome);
             $statement->bindParam(':sobrenome', $sobrenome);
             $statement->bindParam(':nascimento', $nascimento);
@@ -40,6 +33,20 @@ class ClienteDAO {
             $statement->bindParam(':observacoes', $observacoes);
             $statement->bindParam(':bairro', $bairro);
             $statement->bindParam(':email', $email);
+
+            $nome = $cliente->getNome();
+            $sobrenome = $cliente->getSobrenome();
+            $nascimento = $cliente->getData();
+            $cpf = $cliente->getCpf();
+            $sexo = $cliente->getSexo();
+            $cep = $cliente->getCep();
+            $logradouro = $cliente->getLogradouro();
+            $observacoes = $cliente->getObservacao();
+            $bairro = $cliente->getBairro();
+            $email = $cliente->getEmail();
+
+
+
             $statement->execute();
             return $this->findById($this->conexao->lastInsertId());
         } catch(PDOException $e) {
@@ -55,7 +62,7 @@ class ClienteDAO {
             $nome = $cliente->getNome();
             $id = $cliente->getId();
             $statement->bindParam(':nome', $nome);
-            $statement->bindParam(':id', $id);
+            $statement->bindParam(':ID', $id);
             $statement->execute();
             return $this->findById($id);
         } catch(PDOException $e) {
@@ -65,7 +72,8 @@ class ClienteDAO {
     }
     
     public function save(Cliente $cliente) {
-        if (is_null($cliente->getId())) {
+        echo $cliente->getId();
+        if (empty($cliente->getId())) {
             return $this->insert($cliente);
         } else {
             return $this->update($cliente);
@@ -76,7 +84,7 @@ class ClienteDAO {
         $sql = "DELETE FROM tb_clientes WHERE CLI_ID=:ID";
         try {
             $statement = $this->conexao->prepare($sql);
-            $statement->bindParam(':id', $id);
+            $statement->bindParam(':ID', $id);
             $statement->execute();
         } catch(PDOException $e) {
             echo $e->getMessage();
@@ -130,7 +138,7 @@ class ClienteDAO {
     public function findById($id) {
         $sql = "SELECT * FROM tb_clientes WHERE CLI_ID=:ID";
         $statement = $this->conexao->prepare($sql);
-        $statement->bindParam(':id', $id);
+        $statement->bindParam(':ID', $id);
         $statement->execute();
         $row = $statement->fetch();
         $cliente = new Cliente();

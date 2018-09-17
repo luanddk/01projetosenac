@@ -5,10 +5,10 @@ $cliente = new Cliente();
 $clienteDAO = new ClienteDAO();
 
 if (isset($_POST['editar']) && $_POST['editar'] == 'editar') {
-  $cliente = $clienteDAO->findById($_POST['ID']);
+  $cliente = $clienteDAO->findById($_POST['id']);
 }
 if (isset($_POST['remover']) && $_POST['remover'] == 'remover') {
-  $clienteDAO->remove($_POST['ID']);
+  $clienteDAO->remove($_POST['id']);
   header('location: index.php');
 }
 
@@ -72,7 +72,7 @@ $clientes = $clienteDAO->findAll();
       <td>
           <form method="post" id="form-editar">
             <input type="hidden" name="id" value="<?=$cliente->getId();?>">
-            <button type="submit" class="btn btn-sm btn-success" name="editar" value="editar"><i class="fas fa-edit"></i></button>
+            <button type="submit" class="btn btn-sm btn-success" name="editar" value="editar"  href="../cadastro/index.php" ><i class="fas fa-edit"></i></button>
           </form>
       </td>
       <td>

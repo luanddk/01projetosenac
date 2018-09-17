@@ -5,7 +5,6 @@ require_once(__DIR__ . "/./UnidadeFederativa.class.php");
 require_once(__DIR__ . "/./Cidade.class.php");
 require_once(__DIR__ . "/./Bairro.class.php");
 
-
 class Cliente {
 
     private $id;
@@ -21,6 +20,10 @@ class Cliente {
     private $logradouro;
     private $observacao;
     private $email;
+
+    public function __construct() {
+        $this->sexo = new Sexo();
+    }
 
     public function getId(){
         return $this->id;
@@ -58,7 +61,7 @@ class Cliente {
         return $this->sexo;
     }
 
-    public function setSexo(Sexo $sexo){
+    public function setSexo($sexo){
         $this->sexo = $sexo;
     }
 
@@ -105,7 +108,7 @@ class Cliente {
         return $this->cidade;
     }
 
-    public function setCidade(Cidade $cidade){
+    public function setCidade($cidade){
         $this->cidade = $cidade;
     }
 
@@ -113,7 +116,7 @@ class Cliente {
         return $this->bairro;
     }
 
-    public function setBairro(Bairro $bairro){
+    public function setBairro($bairro){
         $this->bairro = $bairro;
     }
 
