@@ -4,12 +4,13 @@ require_once(__DIR__ ."/../classes/dao/ClienteDAO.class.php");
 $cliente = new Cliente();
 $clienteDAO = new ClienteDAO();
 
-if (isset($_POST['editar']) && $_POST['editar'] == 'editar') {
-  $cliente = $clienteDAO->findById($_POST['id']);
+if (isset($_GET['editar']) && $_GET['editar'] == 'editar') {
+  $cliente = $clienteDAO->findById($_GET['id']);
+  var_dump($cliente);
 }
 if (isset($_POST['remover']) && $_POST['remover'] == 'remover') {
   $clienteDAO->remove($_POST['id']);
-  header('location: index.php');
+  header('location: index.php?');
 }
 
 $clientes = $clienteDAO->findAll();
@@ -70,15 +71,15 @@ $clientes = $clienteDAO->findAll();
        <td><?=$cliente->getCidade()->getNome();?></td>
        <td><?=$cliente->getUnidadeFederativa()->getSigla();?></td>
       <td>
-          <form method="post" id="form-editar">
+          <form method="get" id="editar" action="../cadastro/index.php">
             <input type="hidden" name="id" value="<?=$cliente->getId();?>">
-            <button type="submit" class="btn btn-sm btn-success" name="editar" value="editar"  href="../cadastro/index.php" ><i class="fas fa-edit"></i></button>
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
           </form>
       </td>
       <td>
         <form method="post" id="form-remover">
           <input type="hidden" name="id" value="<?=$cliente->getId();?>">
-          <button type="submit" class="btn btn-sm btn-danger" name="remover" value="remover"><i class="fas fa-trash-alt"></i></button>
+          <button type="submit" class="btn btn-sm btn-danger" name="remover" value="remover" onclick="return confirmaRemover();" ><i class="fas fa-trash-alt"></i></button>
         </form>
       </td>
     </tr>
@@ -89,4 +90,5 @@ $clientes = $clienteDAO->findAll();
 </div>
 </div>
 </body>
+<script src="../assets/js/cadastro.js"></script>
 </html>

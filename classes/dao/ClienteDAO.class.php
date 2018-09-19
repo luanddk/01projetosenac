@@ -16,13 +16,11 @@ class ClienteDAO {
 
 
             $statement = $this->conexao->prepare("INSERT INTO tb_clientes (CLI_NOME, CLI_SOBRENOME, CLI_DATA, CLI_CPF, CLI_SEX_ID, 
-        CLI_CEP, CLI_LOGRADOURO, CLI_OBSERVACOES, CLI_BAI_ID, 
-                            CLI_EMAIL) 
+        CLI_CEP, CLI_LOGRADOURO, CLI_OBSERVACOES, CLI_BAI_ID, CLI_EMAIL)  
+                            
         VALUES (:nome, :sobrenome, :nascimento, :cpf, :sexo, 
                  :cep, :logradouro, :observacoes, :bairro, 
                 :email)");
-
-
             $statement->bindParam(':nome', $nome);
             $statement->bindParam(':sobrenome', $sobrenome);
             $statement->bindParam(':nascimento', $nascimento);
@@ -44,9 +42,7 @@ class ClienteDAO {
             $observacoes = $cliente->getObservacao();
             $bairro = $cliente->getBairro();
             $email = $cliente->getEmail();
-
-
-
+            
             $statement->execute();
             return $this->findById($this->conexao->lastInsertId());
         } catch(PDOException $e) {
@@ -55,16 +51,24 @@ class ClienteDAO {
         }
     }
 
-    private function update(Cliente $cliente) {
-        $sql = "UPDATE tb_clientes SET CLI_NOME=:nome WHERE CLI_ID=:ID";
+    public function update(Cliente $cliente) {
+
         try {
-            $statement = $this->conexao->prepare($sql);
-            $nome = $cliente->getNome();
-            $id = $cliente->getId();
-            $statement->bindParam(':nome', $nome);
-            $statement->bindParam(':ID', $id);
+
+
+
+            $statement = $this->conexao->prepare("UPDATE tb_clientes 
+                SET CLI_NOME='".$cliente->getNome()."', CLI_SOBRENOME='".$cliente->getSobrenome()."',
+                    CLI_DATA='".$cliente->getData()."', CLI_CPF='".$cliente->getCpf()."',
+                    CLI_SEX_ID='".$cliente->getSexo()."', CLI_CEP='".$cliente->getCep()."',
+                    CLI_LOGRADOURO='".$cliente->getLogradouro()."', CLI_OBSERVACOES='".$cliente->getObservacao()."',
+                    CLI_BAI_ID='".$cliente->getBairro()."', CLI_EMAIL='".$cliente->getEmail()."'
+                WHERE CLI_ID=".$_GET['id']);
+
+
+
             $statement->execute();
-            return $this->findById($id);
+            return $this->findById($cliente->getId());
         } catch(PDOException $e) {
             echo $e->getMessage();
             return null;
@@ -73,7 +77,9 @@ class ClienteDAO {
     
     public function save(Cliente $cliente) {
         echo $cliente->getId();
-        if (empty($cliente->getId())) {
+
+        if (empty($cliente->getId()) && !isset($_GET['id'])) {
+            echo "insert";
             return $this->insert($cliente);
         } else {
             return $this->update($cliente);
@@ -141,9 +147,20 @@ class ClienteDAO {
         $statement->bindParam(':ID', $id);
         $statement->execute();
         $row = $statement->fetch();
+
         $cliente = new Cliente();
         $cliente->setId($row['CLI_ID']);
         $cliente->setNome($row['CLI_NOME']);
+        $cliente->setSobrenome($row['CLI_SOBRENOME']);
+        $cliente->setData($row['CLI_DATA']);
+        $cliente->setCpf($row['CLI_CPF']);
+        $cliente->setSexo($row['CLI_SEX_ID']);
+        $cliente->setCep($row['CLI_CEP']);
+        $cliente->setLogradouro($row['CLI_LOGRADOURO']);
+        $cliente->setObservacao($row['CLI_OBSERVACOES']);
+        $cliente->setBairro($row['CLI_BAI_ID']);
+        $cliente->setEmail($row['CLI_EMAIL']);
+
         return $cliente;
     }
 }
