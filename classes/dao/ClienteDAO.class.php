@@ -4,6 +4,7 @@ require_once(__DIR__ . "/../modelo/Sexo.class.php");
 require_once(__DIR__ . "/../modelo/Bairro.class.php");
 require_once(__DIR__ . "/../modelo/Cidade.class.php");
 require_once(__DIR__ . "/../modelo/UnidadeFederativa.class.php");
+
 class ClienteDAO {
     
     private $conexao;
@@ -14,13 +15,12 @@ class ClienteDAO {
 
         try {
 
-
             $statement = $this->conexao->prepare("INSERT INTO tb_clientes (CLI_NOME, CLI_SOBRENOME, CLI_DATA, CLI_CPF, CLI_SEX_ID, 
-        CLI_CEP, CLI_LOGRADOURO, CLI_OBSERVACOES, CLI_BAI_ID, CLI_EMAIL)  
+                          CLI_CEP, CLI_LOGRADOURO, CLI_OBSERVACOES, CLI_BAI_ID, CLI_EMAIL)  
                             
-        VALUES (:nome, :sobrenome, :nascimento, :cpf, :sexo, 
-                 :cep, :logradouro, :observacoes, :bairro, 
-                :email)");
+                          VALUES (:nome, :sobrenome, :nascimento, :cpf, :sexo, 
+                          :cep, :logradouro, :observacoes, :bairro, :email)");
+
             $statement->bindParam(':nome', $nome);
             $statement->bindParam(':sobrenome', $sobrenome);
             $statement->bindParam(':nascimento', $nascimento);
@@ -55,8 +55,6 @@ class ClienteDAO {
 
         try {
 
-
-
             $statement = $this->conexao->prepare("UPDATE tb_clientes 
                 SET CLI_NOME='".$cliente->getNome()."', CLI_SOBRENOME='".$cliente->getSobrenome()."',
                     CLI_DATA='".$cliente->getData()."', CLI_CPF='".$cliente->getCpf()."',
@@ -64,8 +62,6 @@ class ClienteDAO {
                     CLI_LOGRADOURO='".$cliente->getLogradouro()."', CLI_OBSERVACOES='".$cliente->getObservacao()."',
                     CLI_BAI_ID='".$cliente->getBairro()."', CLI_EMAIL='".$cliente->getEmail()."'
                 WHERE CLI_ID=".$_GET['id']);
-
-
 
             $statement->execute();
             return $this->findById($cliente->getId());
@@ -76,10 +72,7 @@ class ClienteDAO {
     }
     
     public function save(Cliente $cliente) {
-        echo $cliente->getId();
-
         if (empty($cliente->getId()) && !isset($_GET['id'])) {
-            echo "insert";
             return $this->insert($cliente);
         } else {
             return $this->update($cliente);

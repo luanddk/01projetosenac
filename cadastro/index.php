@@ -16,12 +16,9 @@ $sexoDAO = new SexoDAO();
 
 if (isset($_GET['id'])) {
   $cliente = $clienteDAO->findById($_GET['id']);
-  //$clienteDAO->update();
 }
 
-
 if (isset($_POST['salvar']) && $_POST['salvar'] == 'salvar') {
-    echo "teste123";
   $cliente->setId($_POST['id']);
   $cliente->setNome($_POST['nome']);
   $cliente->setSobrenome($_POST['sobrenome']);
@@ -35,16 +32,15 @@ if (isset($_POST['salvar']) && $_POST['salvar'] == 'salvar') {
   $cliente->setEmail($_POST['email']);
 
   $clienteDAO->save($cliente);
-  //var_dump($cliente);
+
   if ($cliente->getId() == 0) {
      $cliente->setId(null);
   }
   if ($_POST['id'] != '') {
       $cliente->setId($_POST['ID']);
   }
-
   header('location: index.php');
-}else{
+  }else{
     if(isset($_GET['id']) && isset($_POST['salvar'])){
         $cliente->setId($_POST['id']);
         $cliente->setNome($_POST['nome']);
@@ -57,21 +53,19 @@ if (isset($_POST['salvar']) && $_POST['salvar'] == 'salvar') {
         $cliente->setObservacao($_POST['observacao']);
         $cliente->setBairro($_POST['bairro']);
         $cliente->setEmail($_POST['email']);
+
         if ($cliente->getId() == 0) {
             $cliente->setId(null);
         }
         if ($_POST['id'] != '') {
             $cliente->setId($_POST['ID']);
         }
-
         $clienteDAO->save($cliente);
         header('location: ../listar/index.php');
-
     }
 }
 $ufdao = new UnidadeFederativaDAO();
 $ufs = $ufdao->findAll();
-
 
 ?>
 <!DOCTYPE html>
