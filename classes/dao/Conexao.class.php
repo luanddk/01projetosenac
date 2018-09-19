@@ -4,7 +4,7 @@ class Conexao {
     private const SERVER = "localhost";
     private const USER = "root";
     private const PASS = "";
-    private const DB = "db_projetosenac";
+    private const DB = "db_testeproject";
     private const URL = "mysql:host=" . self::SERVER . ";dbname=" . self::DB;
     private const UTF = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
     private static $conexao;
